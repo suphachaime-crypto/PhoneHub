@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "InventoryApp2",
-    "slug": "InventoryApp2",
+    "name": "PhoneHub-shop",
+    "slug": "PhoneHub-shop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
