@@ -1,6 +1,8 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, {
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -25,12 +27,54 @@ const ProductContext =
     {} as ProductContextType
   );
 
+const STORAGE_KEY = "PRODUCTS";
+
 export function ProductProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  // โหลดข้อมูลครั้งแรก
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await AsyncStorage.getItem(
+          STORAGE_KEY
+        );
+
+        if (data) {
+          setProducts(JSON.parse(data));
+        }
+      } catch (error) {
+        console.log("Load Error:", error);
+      } finally {
+        setLoaded(true);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
+  // บันทึกข้อมูลทุกครั้งที่มีการเปลี่ยนแปลง
+  useEffect(() => {
+    if (!loaded) return;
+
+    const saveProducts = async () => {
+      try {
+        await AsyncStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify(products)
+        );
+      } catch (error) {
+        console.log("Save Error:", error);
+      }
+    };
+
+    saveProducts();
+  }, [products, loaded]);
 
   const addProduct = (product: Product) => {
     setProducts((prev) => [...prev, product]);

@@ -1,21 +1,27 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    Text,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { useProducts } from "../../context/ProductContext";
 
 export default function CategoryScreen() {
-  const { name } = useLocalSearchParams();
+  const params = useLocalSearchParams();
+
+  const categoryName = Array.isArray(params.name)
+    ? params.name[0]
+    : params.name ?? "";
 
   const { products } = useProducts();
 
   const categoryProducts = products.filter(
-    (item) => item.category === name
+    (item) =>
+      item.category.trim().toLowerCase() ===
+      categoryName.trim().toLowerCase()
   );
 
   const renderItem = ({ item }: any) => (
@@ -31,9 +37,7 @@ export default function CategoryScreen() {
       />
 
       <View style={styles.info}>
-        <Text style={styles.name}>
-          {item.name}
-        </Text>
+        <Text style={styles.name}>{item.name}</Text>
 
         <View style={styles.row}>
           <MaterialCommunityIcons
@@ -41,7 +45,6 @@ export default function CategoryScreen() {
             size={18}
             color="#10B981"
           />
-
           <Text style={styles.price}>
             ฿ {item.price.toLocaleString()}
           </Text>
@@ -53,7 +56,6 @@ export default function CategoryScreen() {
             size={18}
             color="#2563EB"
           />
-
           <Text style={styles.stock}>
             Stock : {item.stock}
           </Text>
@@ -65,7 +67,7 @@ export default function CategoryScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        📂 {name}
+        📂 {categoryName}
       </Text>
 
       <FlatList
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
 
   card: {
     flexDirection: "row",
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
     borderRadius: 18,
     overflow: "hidden",
     marginBottom: 15,
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-    name: {
+  name: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#111827",

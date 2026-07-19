@@ -10,13 +10,8 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="(tabs)" />
-
         <Stack.Screen name="login" />
-
-        <Stack.Screen name="index" />
-
         <Stack.Screen name="edit-product" />
-
         <Stack.Screen name="categories/[name]" />
       </Stack>
     </ProductProvider>

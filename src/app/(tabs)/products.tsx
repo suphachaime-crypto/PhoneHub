@@ -17,12 +17,23 @@ export default function ProductsScreen() {
   const { products, deleteProduct } = useProducts();
 
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("All");
 
-  const filteredProducts = products.filter(
-    (item) =>
+  const categories = [
+    "All",
+    ...new Set(products.map((item) => item.category)),
+  ];
+
+  const filteredProducts = products.filter((item) => {
+    const matchSearch =
       item.name.toLowerCase().includes(search.toLowerCase()) ||
-      item.category.toLowerCase().includes(search.toLowerCase())
-  );
+      item.category.toLowerCase().includes(search.toLowerCase());
+
+    const matchFilter =
+      filter === "All" || item.category === filter;
+
+    return matchSearch && matchFilter;
+  });
 
   const confirmDelete = (id: string, name: string) => {
     Alert.alert(
@@ -55,9 +66,7 @@ export default function ProductsScreen() {
       />
 
       <View style={styles.content}>
-        <Text style={styles.name}>
-          {item.name}
-        </Text>
+        <Text style={styles.name}>{item.name}</Text>
 
         <View style={styles.categoryRow}>
           <MaterialCommunityIcons
@@ -137,12 +146,39 @@ export default function ProductsScreen() {
       />
 
       <FlatList
+        horizontal
+        data={categories}
+        keyExtractor={(item) => item}
+        showsHorizontalScrollIndicator={false}
+        style={styles.filterList}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => setFilter(item)}
+            style={[
+              styles.filterButton,
+              filter === item &&
+                styles.filterButtonActive,
+            ]}
+          >
+            <Text
+              style={[
+                styles.filterText,
+                filter === item &&
+                  styles.filterTextActive,
+              ]}
+            >
+              {item}
+            </Text>
+          </TouchableOpacity>
+        )}
+      />
+
+      <FlatList
         data={filteredProducts}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
-
-                ListEmptyComponent={
+        ListEmptyComponent={
           <Text style={styles.empty}>
             No Products
           </Text>
@@ -173,6 +209,31 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 16,
     elevation: 2,
+  },
+
+  filterList: {
+    marginBottom: 15,
+  },
+
+  filterButton: {
+    backgroundColor: "#E5E7EB",
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+
+  filterButtonActive: {
+    backgroundColor: "#2563EB",
+  },
+
+  filterText: {
+    color: "#374151",
+    fontWeight: "600",
+  },
+
+  filterTextActive: {
+    color: "#FFFFFF",
   },
 
   card: {
@@ -237,7 +298,7 @@ const styles = StyleSheet.create({
     marginTop: 18,
   },
 
-    editButton: {
+  editButton: {
     flex: 1,
     flexDirection: "row",
     backgroundColor: "#2563EB",

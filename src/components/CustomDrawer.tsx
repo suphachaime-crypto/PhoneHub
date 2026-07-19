@@ -1,125 +1,108 @@
-import {
-    DrawerContentScrollView,
-    DrawerItem,
-} from "@react-navigation/drawer";
-
 import { router } from "expo-router";
-
 import {
-    StyleSheet,
-    Text,
-    View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 import {
-    Ionicons,
-    MaterialCommunityIcons,
+  Ionicons,
+  MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
-export default function CustomDrawer(props: any) {
+export default function CustomDrawer() {
   return (
-    <View style={{ flex: 1, backgroundColor: "#5B21B6" }}>
-      <DrawerContentScrollView
-        {...props}
-        contentContainerStyle={{
-          flex: 1,
-          paddingTop: 40,
-        }}
+    <View style={styles.container}>
+      <Text style={styles.title}>Inventory App</Text>
+
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => router.push("/(tabs)")}
       >
-        <Text style={styles.title}>
-          Inventory App
-        </Text>
+        <Ionicons name="home" size={22} color="white" />
+        <Text style={styles.label}>Home</Text>
+      </TouchableOpacity>
 
-        <DrawerItem
-          label="Home"
-          labelStyle={styles.label}
-          icon={() => (
-            <Ionicons
-              name="home"
-              size={22}
-              color="white"
-            />
-          )}
-          onPress={() => router.push("/(tabs)")}
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => router.push("/(tabs)/products")}
+      >
+        <MaterialCommunityIcons
+          name="cube"
+          size={22}
+          color="white"
         />
+        <Text style={styles.label}>Products</Text>
+      </TouchableOpacity>
 
-        <DrawerItem
-          label="Products"
-          labelStyle={styles.label}
-          icon={() => (
-            <MaterialCommunityIcons
-              name="cube"
-              size={22}
-              color="white"
-            />
-          )}
-          onPress={() =>
-            router.push("/(tabs)/products")
-          }
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => router.push("/(tabs)/categories")}
+      >
+        <MaterialCommunityIcons
+          name="shape"
+          size={22}
+          color="white"
         />
+        <Text style={styles.label}>Categories</Text>
+      </TouchableOpacity>
 
-        <DrawerItem
-          label="Categories"
-          labelStyle={styles.label}
-          icon={() => (
-            <MaterialCommunityIcons
-              name="shape"
-              size={22}
-              color="white"
-            />
-          )}
-          onPress={() =>
-            router.push("/(tabs)/categories")
-          }
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => router.push("/(tabs)/add-product")}
+      >
+        <Ionicons
+          name="add-circle"
+          size={22}
+          color="white"
         />
+        <Text style={styles.label}>Add Product</Text>
+      </TouchableOpacity>
 
-        <DrawerItem
-          label="Add Product"
-          labelStyle={styles.label}
-          icon={() => (
-            <Ionicons
-              name="add-circle"
-              size={22}
-              color="white"
-            />
-          )}
-          onPress={() =>
-            router.push("/(tabs)/add-product")
-          }
+      <View style={{ flex: 1 }} />
+
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => router.replace("/login")}
+      >
+        <MaterialCommunityIcons
+          name="logout"
+          size={22}
+          color="white"
         />
-
-                <View style={{ flex: 1 }} />
-
-        <DrawerItem
-          label="Logout"
-          labelStyle={styles.label}
-          icon={() => (
-            <MaterialCommunityIcons
-              name="logout"
-              size={22}
-              color="white"
-            />
-          )}
-          onPress={() => router.replace("/login")}
-        />
-      </DrawerContentScrollView>
+        <Text style={styles.label}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#5B21B6",
+    paddingTop: 50,
+    paddingHorizontal: 20,
+  },
+
   title: {
-    color: "white",
+    color: "#fff",
     fontSize: 28,
     fontWeight: "bold",
+    marginBottom: 40,
     textAlign: "center",
-    marginBottom: 35,
+  },
+
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 16,
   },
 
   label: {
-    color: "white",
+    color: "#fff",
     fontSize: 18,
+    marginLeft: 15,
     fontWeight: "600",
-    marginLeft: -10,
   },
 });
