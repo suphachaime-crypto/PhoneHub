@@ -29,6 +29,9 @@ const ProductContext =
 
 const STORAGE_KEY = "PRODUCTS";
 
+const GITHUB_URL =
+  "https://raw.githubusercontent.com/suphachaime-crypto/PhoneHub/refs/heads/master/products.json";
+
 export function ProductProvider({
   children,
 }: {
@@ -37,19 +40,40 @@ export function ProductProvider({
   const [products, setProducts] = useState<Product[]>([]);
   const [loaded, setLoaded] = useState(false);
 
-  // โหลดข้อมูลครั้งแรก
+  // โหลดข้อมูลจาก GitHub ก่อน
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const data = await AsyncStorage.getItem(
-          STORAGE_KEY
-        );
+        const response = await fetch(GITHUB_URL);
 
-        if (data) {
-          setProducts(JSON.parse(data));
+        if (response.ok) {
+          const data = await response.json();
+
+          setProducts(data);
+
+          await AsyncStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(data)
+          );
+        } else {
+          const localData = await AsyncStorage.getItem(
+            STORAGE_KEY
+          );
+
+          if (localData) {
+            setProducts(JSON.parse(localData));
+          }
         }
       } catch (error) {
         console.log("Load Error:", error);
+
+        const localData = await AsyncStorage.getItem(
+          STORAGE_KEY
+        );
+
+        if (localData) {
+          setProducts(JSON.parse(localData));
+        }
       } finally {
         setLoaded(true);
       }

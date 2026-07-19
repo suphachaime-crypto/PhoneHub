@@ -2,25 +2,25 @@
   {
     "id": "1",
     "name": "iPhone17",
-    "brand": "Apple",
+    "category": "Apple",
     "price": 29900,
     "stock": 60,
-    "image_url": "https://https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-storage-select-202509-sage?wid=5120&hei=2880&fmt=webp&qlt=90&.v=cVgyTFRHeEI2NnFsOEV6aTB4OG83NFVVTEF4WTZKMHBlZ3U4MnlNZ3c1bVQxUngzQk9NT0tyOE5HTXNLN0YyOUR1ak1SbkZpQ0hqY2xBWWtPMjVFUWJGN0wzL0h1ekhqbXlQVUw3clJ1VkVSTVBIb2MxczhBYWxQS1VteVlBcnM&traceId=1"
+    "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-storage-select-202509-sage?wid=5120&hei=2880&fmt=webp&qlt=90"
   },
   {
     "id": "2",
     "name": "Galaxy S26 Ultra",
-    "brand": "Samsung",
+    "category": "Samsung",
     "price": 46900,
     "stock": 50,
-    "image_url": "https://https://images.samsung.com/th/smartphones/galaxy-s26-ultra/buy/product_color_pinkGold_Tablet.jpg?imbypass=true"
+    "image": "https://images.samsung.com/th/smartphones/galaxy-s26-ultra/buy/product_color_pinkGold_Tablet.jpg?imbypass=true"
   },
   {
     "id": "3",
     "name": "Pura 90s ProMax",
-    "brand": "Huawei",
+    "category": "Huawei",
     "price": 64590,
     "stock": 34,
-    "image_url": "https://https://img01.huaweifile.com/sg/ms/th/pms/uomcdn/TH_HW_B2C/pms/202607/gbom/6942711306672/800_800_4EF0927DD82D068035D67A332BCC10FBmp.webp"
+    "image": "https://img01.huaweifile.com/sg/ms/th/pms/uomcdn/TH_HW_B2C/pms/202607/gbom/6942711306672/800_800_4EF0927DD82D068035D67A332BCC10FBmp.webp"
   }
 ]
